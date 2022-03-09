@@ -1,0 +1,57 @@
+<html>
+    <head>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+	</head>
+	<style> 
+		.button-1 {
+		  background-color: #EA4C89;
+		  border-radius: 8px;
+		  border-style: none;
+		  box-sizing: border-box;
+		  color: #FFFFFF;
+		  cursor: pointer;
+		  display: inline-block;
+		  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		  font-size: 14px;
+		  font-weight: 500;
+		  height: 40px;
+		  line-height: 20px;
+		  list-style: none;
+		  margin: 0;
+		  outline: none;
+		  padding: 10px 16px;
+		  position: relative;
+		  text-align: center;
+		  text-decoration: none;
+		  transition: color 100ms;
+		  vertical-align: baseline;
+		  user-select: none;
+		  -webkit-user-select: none;
+		  touch-action: manipulation;
+		}
+
+		.button-1:hover,
+		.button-1:focus {
+		  background-color: #F082AC;
+		}
+	</style>
+    <body>
+        
+		<h1>Internal Bug Tracker</h1>
+		
+		<a href="#" id="feedback-button" class='button-1'>Report a Bug :(</a>
+		
+		<script type="text/javascript" src="https://glowupgames.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-9zew5j/b/7/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=3b843c26"></script>
+
+		
+		<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
+		"triggerFunction": function(showCollectorDialog) {
+			//Requires that jQuery is available! 
+			jQuery("#feedback-button").click(function(e) {
+				e.preventDefault();
+				showCollectorDialog();
+			});
+		}};</script>
+
+    </body>
+</html>
