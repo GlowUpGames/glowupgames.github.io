@@ -5,30 +5,55 @@
     <body>
         <! -- Title -->
 		<h1>PlayFab Data Manipulator</h1>
+		<h4>Step 1: Enter your PlayFab ID and the X-SecretKey (ask Ashley for it).</h4>
 		
 		<! -- Input Fields -->
-		Enter your PlayFab ID
+		&emsp; Enter your PlayFab ID
 		<input type="text" id="PFIDInput">
 		<br><br>
 		
-		Enter the X-SecretKey
+		&emsp; Enter the X-SecretKey
 		<input type="text" id="xSecretInput">
 		<br><br>
+
+		<! -- Get Buttons -->
+		<h4>Step 2: Hit the "Get Character ID" button.</h4>
 		
-		<! -- Character ID -->
+		&emsp;
 		<button type="button" id="characterIDBtn">Get Character ID</button>
-		<b id="characterIDText"> </h1>
+		<b id="characterIDText"> </b>
+		<br>
+		
+		<! -- Other Buttons -->
+		<h4>Step 3: Now do what you want to do!!</h4>
+		<button type="button" id="saveDataBtn">Get All Save Data</button>
+		<p id="saveDataText">  </p>
 		<br>
 
+	<!--
+		<button type="button" id="restartButton">Restart the Game</button>
+		<p id="restartText">  </p>
+		
+		<button type="button" id="farawayButton">Start at a point further down</button>
+		<p id="farawayText">  </p>
+	-->
 
-
-		<! -- Get Character ID Button -->
 		<script type="text/javascript">
+			var playFabID = "";
+			var xSecretKey = "";
+			var characterID = "";
+			
+			var saveData = "";
+			var resetString ="{\"allWordCardsUnlocked\":false,\"inkJSONData\":\"\",\"isTutorialEnabled\":true,\"finishedNavTutorial\":false,\"lastLocationName\":\"\"}";
+			var farawayString = "{\"allWordCardsUnlocked\":false,\"inkJSONData\":\"{\\\"flows\\\":{\\\"DEFAULT_FLOW\\\":{\\\"callstack\\\":{\\\"threads\\\":[{\\\"callstack\\\":[{\\\"cPath\\\":\\\"A01_B01.hype_tut.0.g-2.g-3\\\",\\\"idx\\\":3,\\\"exp\\\":false,\\\"type\\\":0}],\\\"threadIndex\\\":46,\\\"previousContentObject\\\":\\\"A01_B01.hype_tut.0.g-2.g-3.2\\\"}],\\\"threadCounter\\\":46},\\\"outputStream\\\":[\\\"^[TAGS]\\\",{\\\"#\\\":\\\"savepoint\\\"},\\\"\\\\n\\\"],\\\"currentChoices\\\":[]}},\\\"currentFlowName\\\":\\\"DEFAULT_FLOW\\\",\\\"variablesState\\\":{\\\"player_name\\\":\\\"^gh\\\",\\\"issa_relationship\\\":5,\\\"show_hype\\\":true,\\\"hasNotPickedUpFirstWordCard\\\":false,\\\"show_phone\\\":true,\\\"created_character\\\":true,\\\"set_objective\\\":\\\"^A1SB1_FindIssa\\\",\\\"complete_objective\\\":\\\"^A1SB1_FindIssa\\\",\\\"uncollected_words\\\":1},\\\"evalStack\\\":[],\\\"visitCounts\\\":{\\\"\\\":1,\\\"next_storybeat\\\":1,\\\"Arc01_Beat01_MovingIn_Start\\\":1,\\\"A01_B01\\\":1,\\\"A01_B01.CC\\\":1,\\\"A01_B01.CC.0.c-0\\\":1,\\\"A01_B01.CC.0.g-0\\\":1,\\\"A01_B01.CC.0.g-0.c-1\\\":1,\\\"A01_B01.CC.0.g-1\\\":1,\\\"A01_B01.start\\\":1,\\\"A01_B01.start.0.c-0\\\":1,\\\"A01_B01.issa_intro\\\":1,\\\"A01_B01.issa_intro.0.c-0\\\":1,\\\"A01_B01.issa_intro.0.g-0\\\":1,\\\"A01_B01.get_name\\\":1,\\\"A01_B01.name_conf\\\":1,\\\"A01_B01.name_conf.0.c-0\\\":1,\\\"A01_B01.pronouns\\\":1,\\\"A01_B01.pronouns.0.c-0\\\":1,\\\"A01_B01.pronouns.0.g-0\\\":1,\\\"A01_B01.pronouns.0.g-0.c-3\\\":1,\\\"A01_B01.pronouns.0.g-1\\\":1,\\\"A01_B01.pronouns.0.g-1.c-4\\\":1,\\\"A01_B01.apt_intro\\\":1,\\\"A01_B01.apt_intro.0.g-0\\\":1,\\\"A01_B01.apt_intro.0.g-0.g-1\\\":1,\\\"A01_B01.apt_intro.0.g-0.g-1.c-0\\\":1,\\\"A01_B01.apt_intro.0.g-2\\\":1,\\\"A01_B01.apt_intro.0.g-2.c-3\\\":1,\\\"A01_B01.apt_intro.0.g-3\\\":1,\\\"A01_B01.mirror_intro\\\":1,\\\"A01_B01.mirror_intro.0.g-0\\\":1,\\\"A01_B01.mirror_intro.0.g-0.c-0\\\":1,\\\"A01_B01.mirror_intro.0.g-1\\\":1,\\\"A01_B01.mirror_intro.0.g-1.g-2\\\":1,\\\"A01_B01.mirror_intro.0.g-1.g-2.g-3\\\":1,\\\"A01_B01.mirror_intro.0.g-1.g-2.g-3.g-4\\\":1,\\\"A01_B01.mirror_intro.0.g-1.g-2.g-3.g-4.c-3\\\":1,\\\"A01_B01.mirror_intro.0.g-5\\\":1,\\\"A01_B01.mirror_intro.0.g-5.5.c-0\\\":1,\\\"A01_B01.mirror_start\\\":1,\\\"A01_B01.mirror_start.0.g-0\\\":1,\\\"A01_B01.mirror_start.0.g-0.c-0\\\":1,\\\"A01_B01.mirror_play\\\":1,\\\"A01_B01.mirror_play.0.c-0\\\":1,\\\"A01_B01.mirror_end\\\":1,\\\"A01_B01.mirror_end.0.g-0\\\":1,\\\"A01_B01.mirror_end.0.g-0.g-1\\\":1,\\\"A01_B01.mirror_end.0.g-0.g-1.c-0\\\":1,\\\"A01_B01.hype_intro\\\":1,\\\"A01_B01.hype_intro.0.g-0\\\":1,\\\"A01_B01.hype_intro.0.g-0.c-0\\\":1,\\\"A01_B01.hype_intro.0.g-1\\\":1,\\\"A01_B01.hype_intro.0.g-1.g-2\\\":1,\\\"A01_B01.hype_intro.0.g-1.g-2.c-3\\\":1,\\\"A01_B01.hype_intro.0.g-1.g-2.c-3.4.c-0\\\":1,\\\"A01_B01.hype_tut\\\":1,\\\"A01_B01.hype_tut.0.c-1\\\":1,\\\"A01_B01.hype_tut.0.g-0\\\":1,\\\"A01_B01.hype_tut.0.g-0.g-1\\\":1,\\\"A01_B01.hype_tut.0.g-0.g-1.c-3\\\":1,\\\"A01_B01.hype_tut.0.g-2\\\":1,\\\"A01_B01.hype_tut.0.g-2.g-3\\\":1},\\\"turnIndices\\\":{},\\\"turnIdx\\\":20,\\\"storySeed\\\":1,\\\"previousRandom\\\":0,\\\"inkSaveVersion\\\":9,\\\"inkFormatVersion\\\":20}\",\"isTutorialEnabled\":true,\"finishedNavTutorial\":true,\"lastLocationName\":\"\"}";
+			
 			$(document).ready(function(){
-				// Get value on button click and show alert
+				
+				// get the character id
 				$("#characterIDBtn").click(function(){
-					var playFabID = $("#PFIDInput").val();
-					var xSecretKey = $("#xSecretInput").val();
+					
+					playFabID = $("#PFIDInput").val();
+					xSecretKey = $("#xSecretInput").val();
 					var settings = {
 					  "url": "https://1502F.playfabapi.com/Server/GetAllUsersCharacters?PlayFabId=" + playFabID,
 					  "method": "POST",
@@ -39,12 +64,41 @@
 					  },
 					};
 
-					$.ajax(settings).done(function characterID(response) {
+
+					$.ajax(settings).done(function(response) {
 					  console.log(response);
-					  $("#characterIDText").text(response.data.Characters[0].CharacterId);
+					  characterID = response.data.Characters[0].CharacterId;
+					  $("#characterIDText").text(characterID);
+					})
+					.fail(function(response) {
+					  alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey.");
+					});
+				});
+				
+				
+				// Get the save data
+				$("#saveDataBtn").click(function(){
+					var settings = {
+					  "url": "https://1502F.playfabapi.com/Server/GetCharacterData?PlayFabId=" + playFabID + "&CharacterId=" + characterID,
+					  "method": "POST",
+					  "timeout": 0,
+					  "headers": {
+						"Content-Type": "application/json",
+						"X-SecretKey": xSecretKey
+					  },
+					};
+
+					$.ajax(settings).done(function(response) {
+					  console.log(response);
+					  saveData = response.data.Data;
+					  $("#saveDataText").text(JSON.stringify(saveData, null, '\t'));
+					})
+					.fail(function(response) {
+					  alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey and generated the character id.");
 					});
 				});
 			});
+			
 			
 		</script>
     </body>
