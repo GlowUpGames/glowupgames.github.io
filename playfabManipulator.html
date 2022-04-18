@@ -1,0 +1,51 @@
+<html>
+    <head>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	</head>
+    <body>
+        <! -- Title -->
+		<h1>PlayFab Data Manipulator</h1>
+		
+		<! -- Input Fields -->
+		Enter your PlayFab ID
+		<input type="text" id="PFIDInput">
+		<br><br>
+		
+		Enter the X-SecretKey
+		<input type="text" id="xSecretInput">
+		<br><br>
+		
+		<! -- Character ID -->
+		<button type="button" id="characterIDBtn">Get Character ID</button>
+		<b id="characterIDText"> </h1>
+		<br>
+
+
+
+		<! -- Get Character ID Button -->
+		<script type="text/javascript">
+			$(document).ready(function(){
+				// Get value on button click and show alert
+				$("#characterIDBtn").click(function(){
+					var playFabID = $("#PFIDInput").val();
+					var xSecretKey = $("#xSecretInput").val();
+					var settings = {
+					  "url": "https://1502F.playfabapi.com/Server/GetAllUsersCharacters?PlayFabId=" + playFabID,
+					  "method": "POST",
+					  "timeout": 0,
+					  "headers": {
+						"Content-Type": "application/json",
+						"X-SecretKey": xSecretKey
+					  },
+					};
+
+					$.ajax(settings).done(function characterID(response) {
+					  console.log(response);
+					  $("#characterIDText").text(response.data.Characters[0].CharacterId);
+					});
+				});
+			});
+			
+		</script>
+    </body>
+</html>
