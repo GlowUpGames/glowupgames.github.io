@@ -25,33 +25,50 @@
 		<h4>Note: you must close the game and reload for the changes to take effect in-game.</h4>
 		
 		<! -- Get Buttons -->
-		<button type="button" id="getCharacterSaveDataBtn">Get All Save Data</button>
+		<p> Get Save Data Info: </p>
+		&emsp; <button type="button" id="getCharacterSaveDataBtn">Get All Save Data</button>
 		<pre id="characterSaveDataText">  </pre>
 		<br>
 		
-		<button type="button" id="getCharacterInventoryBtn">Get Character Inventory (Resettable Inventory)</button>
-		<pre id="characterInventoryText">  </pre>
+		&emsp; <button type="button" id="getCharacterInventoryBtn">Get Character Inventory (Resettable Inventory)</button>
+		&emsp; <pre id="characterInventoryText">  </pre>
 		<br>
 		
-		<button type="button" id="getUserInventoryBtn">Get User Inventory (Permanent/Minted)</button>
-		<p id="userInventoryText">  </p>
+		&emsp; <button type="button" id="getUserInventoryBtn">Get User Inventory (Permanent/Minted)</button>
+		&emsp; <p id="userInventoryText">  </p>
 		<br>
 
-		<! -- Set Buttons -->
-	<!--
-		<button type="button" id="restartButton">Restart the Game</button>
-		<p id="restartText">  </p>
+		<! -- Set Story Buttons -->
+		<p>Change the Story Save Strings: </p>
+		&emsp; <button type="button" id="restartStoryBtn">Restart the Story</button>
+		&emsp; <p id="restartStoryText">  </p>
 		
-		<button type="button" id="farawayButton">Start at a point further down</button>
-		<p id="farawayText">  </p>
-	-->
+		&emsp; <button type="button" id="testPointBtn">Start At Point X</button>
+		&emsp; <p id="testPointText">  </p>
+		<br>
+		<br>
+		<br>
+		<! -- Add Cards Buttons -->
+		Add Cards to Inventory: <br>
+		&emsp; Add a Non-Minted Card
+		<input type="text" id="addCharacterCardInput">
+		<button type="button" id="addCharacterCardButton">Add</button>
+		&emsp; Example:
+		&emsp; &emsp; lit_1
+		&emsp; <p id="addCharacterCardText">  </p>
+		
+		&emsp; Add a Minted Card
+		<input type="text" id="addUserCardInput">
+		<button type="button" id="addUserCardButton">Add</button>
+		&emsp; Example:
+		&emsp; &emsp; lit_1_Minuted
+		&emsp; <p id="addUserCardText">  </p>
 
 		<script type="text/javascript">
 			var playFabID = "";
 			var xSecretKey = "";
 			var characterID = "";
-			
-			var saveData = "";
+
 			var characterInventory = "";
 			var characterCurrency = "";
 			var userInventory = "";
@@ -89,7 +106,7 @@
 					});
 				});
 				
-				// Get the save data
+				// Get the character save data
 				$("#getCharacterSaveDataBtn").click(function(){
 					var settings = {
 						"url": "https://1502F.playfabapi.com/Server/GetCharacterData?PlayFabId=" + playFabID + "&CharacterId=" + characterID,
@@ -97,22 +114,20 @@
 						"timeout": 0,
 						"headers": {
 							"Content-Type": "application/json",
-							<!--"X-SecretKey": xSecretKey-->
-							"X-SecretKey": "CKNOTRDW7MB875FG86YKAPNRFDEBQ9DGFZ1Z8T4331YTE87HMX"
+							"X-SecretKey": xSecretKey
 						},
 					};
 
 					$.ajax(settings).done(function(response) {
 						console.log(response);
-						saveData = response.data.Data;
-						$("#characterSaveDataText").text(JSON.stringify(saveData, null, '\t'));
+						$("#characterSaveDataText").text(JSON.stringify(response.data.Data, null, '\t'));
 					})
 					.fail(function(response) {
 						alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey and generated the character id.");
 					});
 				});
 
-				// Get inventory
+				// Get character inventory
 				$("#getCharacterInventoryBtn").click(function(){
 					var settings = {
 						"url": "https://1502F.playfabapi.com/Server/GetCharacterInventory?PlayFabId=" + playFabID + "&CharacterId=" + characterID,
@@ -135,7 +150,7 @@
 					});
 				});
 				
-				// Get inventory
+				// Get user inventory
 				$("#getUserInventoryBtn").click(function(){
 					var settings = {
 						"url": "https://1502F.playfabapi.com/Server/GetUserInventory?PlayFabId=" + playFabID,
@@ -158,7 +173,121 @@
 					});
 				});
 			
+				// Restart the story
+				$("#restartStoryBtn").click(function(){
+		
+					var settings = {
+						"url": "https://1502F.playfabapi.com/Server/UpdateCharacterData?PlayFabId=" + playFabID + "&CharacterId=" + characterID,
+						"method": "POST",
+						"timeout": 0,
+						"headers": {
+							"Content-Type": "application/json",
+							"X-SecretKey": xSecretKey
+						},
+						"data": JSON.stringify({
+							"PlayFabId": playFabID,
+							"Data": {
+								"characterDataStoryInfo": resetString
+							},
+							"CharacterId": characterID
+						}),
+					};
+
+					$.ajax(settings).done(function(response) {
+						console.log(response);
+						$("#restartStoryText").text("Success!! Hit Get All Save Data to see the results!");
+						
+					})
+					.fail(function(response) {
+						alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey and generated the character id.");
+					});
+				});
 				
+				// a random point
+				$("#testPointBtn").click(function(){
+		
+					var settings = {
+						"url": "https://1502F.playfabapi.com/Server/UpdateCharacterData?PlayFabId=" + playFabID + "&CharacterId=" + characterID,
+						"method": "POST",
+						"timeout": 0,
+						"headers": {
+							"Content-Type": "application/json",
+							"X-SecretKey": xSecretKey
+						},
+						"data": JSON.stringify({
+							"PlayFabId": playFabID,
+							"Data": {
+								"characterDataStoryInfo": testingString
+							},
+							"CharacterId": characterID
+						}),
+					};
+
+					$.ajax(settings).done(function(response) {
+						console.log(response);
+						$("#testPointText").text("Success!! Hit Get All Save Data to see the results!");
+					})
+					.fail(function(response) {
+						alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey and generated the character id.");
+					});
+				});
+				
+				
+				// add a card to the character
+				$("#addCharacterCardButton").click(function(){
+					var itemID = $("#addCharacterCardInput").val();
+					var settings = {
+						"url": "https://1502F.playfabapi.com/Server/GrantItemsToCharacter?PlayFabId=" + playFabID + "&CharacterId=" + characterID + "&ItemIds=" + itemID,
+						"method": "POST",
+						"timeout": 0,
+						"headers": {
+							"Content-Type": "application/json",
+							"X-SecretKey": xSecretKey
+					    },
+						"data": JSON.stringify({
+							"PlayFabId": playFabID,
+							"CharacterId": characterID,
+							"ItemIds": itemID
+						}),
+					};
+
+
+					$.ajax(settings).done(function(response) {
+						console.log(response);
+						$("#addCharacterCardText").text("Success! Hit Get Character Inventory to see the results!");
+					})
+					.fail(function(response) {
+						alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey. Also make sure the card exists.");
+					});
+				});
+				
+				// add a card to the user
+				$("#addUserCardButton").click(function(){
+					var itemID = $("#addUserCardInput").val();
+					var settings = {
+						"url": "https://1502F.playfabapi.com/Server/GrantItemsToUser?PlayFabId=" + playFabID + "&CharacterId=" + characterID + "&ItemIds=" + itemID,
+						"method": "POST",
+						"timeout": 0,
+						"headers": {
+							"Content-Type": "application/json",
+							"X-SecretKey": xSecretKey
+					    },
+						"data": JSON.stringify({
+							"PlayFabId": playFabID,
+							"CharacterId": characterID,
+							"ItemIds": itemID
+						}),
+					};
+
+
+					$.ajax(settings).done(function(response) {
+						console.log(response);
+						$("#addUserCardText").text("Success! Hit Get User Inventory to see the results!");
+					})
+					.fail(function(response) {
+						alert("Oops, something went wrong. Make sure you entered the correct PlayFabID and X-SecretKey. Also make sure the card exists.");
+					});
+				});
 			});
 			
 			
